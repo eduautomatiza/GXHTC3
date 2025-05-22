@@ -1,7 +1,5 @@
 #include "GXHTC3.h"
 
-#include "crc8.h"
-
 GXHTC3::GXHTC3(TwoWire *i2c) : _i2c(i2c), _crcCheck(true) {}
 
 void GXHTC3::begin(int sda, int scl, uint32_t frequency) {
@@ -56,4 +54,15 @@ void GXHTC3::sendCommand(uint16_t cmd) {
   _i2c->write(static_cast<uint8_t>(cmd >> 8));
   _i2c->write(static_cast<uint8_t>(cmd & 0xFF));
   _i2c->endTransmission();
+}
+
+uint8_t GXHTC::crc8(const uint8_t *data, size_t len) {
+  uint8_t crc = 0xFF;
+  for (size_t i = 0; i < len; ++i) {
+    crc ^= data[i];
+    for (uint8_t bit = 0; bit < 8; ++bit) {
+      crc = (crc & 0x80) ? (crc << 1) ^ 0x31 : (crc << 1);
+    }
+  }
+  return crc;
 }

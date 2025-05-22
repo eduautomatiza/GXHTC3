@@ -37,6 +37,7 @@ class GXHTC3 {
 
   void sendCommand(uint16_t cmd);
   bool receiveResponse(uint8_t *buff, size_t len);
+  uint8_t crc8(const uint8_t *data, size_t len);  
 };
 
 #endif
