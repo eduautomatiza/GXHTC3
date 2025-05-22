@@ -56,7 +56,7 @@ void GXHTC3::sendCommand(uint16_t cmd) {
   _i2c->endTransmission();
 }
 
-uint8_t GXHTC::crc8(const uint8_t *data, size_t len) {
+uint8_t GXHTC3::crc8(const uint8_t *data, size_t len) {
   uint8_t crc = 0xFF;
   for (size_t i = 0; i < len; ++i) {
     crc ^= data[i];
